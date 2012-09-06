@@ -1,0 +1,63 @@
+server {
+  listen <%= virtual_ip %>:<%= virtual_port %><% if default_vhost == 'true' %> default<% end %>;
+  server_name <%= server_name %>;
+  <% if @access_log %>
+  access_log <%= access_log %>;
+  <% else %>
+  access_log var/log/access.log;<% end %>
+
+  location <%= location %> {
+    proxy_read_timeout 600;
+    <% if @www_root -%>
+    index <% index_files.each do |i| %><%= i %> <% end %>;<% end %>
+    <% if @allow_from -%>
+    <% allow_from.each do |allow| %>
+    allow <%= allow %>;<% end %><% end %>
+    <% if @deny_from -%>
+    <% deny_from.each do |deny| %>
+    deny <%= deny_from %>;<% end %><% end %>
+    <% if @proxy_pass -%>
+    proxy_pass <%= proxy_pass %>;<% end %>
+    <% if @proxy_http_header -%>
+    <% proxy_http_header.each do |header| %>
+    proxy_set_header <%= header %>;<% end %><% end %>
+  }
+}
+
+<% if ssl_enabled == true %>
+server {
+  listen <%= virtual_ip %>:443;
+  server_name <%= server_name %>;
+  
+  ssl on;
+  ssl_certificate <%= ssl_cert %>;
+  ssl_certificate_key <%= ssl_key %>;
+  
+  ssl_session_timeout <%= ssl_session %>;
+  ssl_verify_depth <%= ssl_depth %>;
+  
+  ssl_protocols <%= ssl_protocols %>;
+  ssl_ciphers <%= ssl_ciphers %>;
+  ssl_prefer_server_ciphers on;
+  
+  <% if ssl_client == true %>
+  ssl_client_certificate <%= ssl_client_cert %>;
+  ssl_verify_client <%= ssl_verify_client %>;<% end %>
+  
+  location <%= location %> {
+    proxy_read_timeout 600;
+    <% if @www_root -%>
+    index <% index_files.each do |i|%><%= i %> <% end %>;<% end %>
+    <% if @allow_from -%>
+    <% allow_from.each do |allow| %>
+    allow <%= allow %>;<% end %><% end %>
+    <% if @deny_from -%>
+    <% deny_from.each do |deny| %>
+    deny <%= deny_from %>;<% end %><% end %>
+    <% if @proxy_pass -%>
+    proxy_pass <%= proxy_pass %><% end %>;
+    <% if @proxy_https_header -%>
+    <% proxy_https_header.each do |header| %>
+    proxy_set_header <%= header %>;<% end %><% end %>
+  }
+}<% end %>
