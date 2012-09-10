@@ -1,5 +1,5 @@
 name    'choonming/nginx'
-version '0.0.1'
+version '1.1.0'
 source 'https://github.com/choonming/puppet-nginx.git'
 author 'Choon Ming Goh <choon.ming@choonming.org'
 license 'Apache License, Version 2.0'
