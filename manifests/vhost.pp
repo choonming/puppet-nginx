@@ -1,6 +1,7 @@
 define nginx::vhost (
   $server_name,
   $ensure             = 'present',
+  $root               = undef,
   $default_vhost      = false,
   $virtual_ip         = '*',
   $virtual_port       = '80',
