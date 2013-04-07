@@ -6,22 +6,20 @@ server {
   <% else %>
   access_log var/log/access.log;<% end %>
 
-  location <%= location %> {
-    proxy_read_timeout 600;
-    <% if @www_root -%>
-    index <% index_files.each do |i| %><%= i %> <% end %>;<% end %>
-    <% if @allow_from -%>
-    <% allow_from.each do |allow| %>
-    allow <%= allow %>;<% end %><% end %>
-    <% if @deny_from -%>
-    <% deny_from.each do |deny| %>
-    deny <%= deny_from %>;<% end %><% end %>
-    <% if @proxy_pass -%>
-    proxy_pass <%= proxy_pass %>;<% end %>
-    <% if @proxy_http_header -%>
-    <% proxy_http_header.each do |header| %>
-    proxy_set_header <%= header %>;<% end %><% end %>
+  <% location.sort.each do |index, element| -%>
+  location <%= index %> {
+  <% element.each do |key, val| -%>
+  <% if val.is_a?(Array) -%>
+    <% val.each do | i | -%>
+    <%= key %> <%= i %>;
+    <% end -%>
+  <% else -%>
+    <%= key %> <%= val %>;
+  <% end -%>
+  <% end -%>
+  <% end -%>
   }
+
 }
 
 <% if ssl_enabled == true %>
@@ -43,21 +41,19 @@ server {
   <% if ssl_client == true %>
   ssl_client_certificate <%= ssl_client_cert %>;
   ssl_verify_client <%= ssl_verify_client %>;<% end %>
-  
-  location <%= location %> {
-    proxy_read_timeout 600;
-    <% if @www_root -%>
-    index <% index_files.each do |i|%><%= i %> <% end %>;<% end %>
-    <% if @allow_from -%>
-    <% allow_from.each do |allow| %>
-    allow <%= allow %>;<% end %><% end %>
-    <% if @deny_from -%>
-    <% deny_from.each do |deny| %>
-    deny <%= deny_from %>;<% end %><% end %>
-    <% if @proxy_pass -%>
-    proxy_pass <%= proxy_pass %><% end %>;
-    <% if @proxy_https_header -%>
-    <% proxy_https_header.each do |header| %>
-    proxy_set_header <%= header %>;<% end %><% end %>
+
+  <% ssl_location.sort.each do |index, element| -%>
+  location <%= index %> {
+  <% element.each do |key, val| -%>
+  <% if val.is_a?(Array) -%>
+    <% val.each do | i | -%>
+    <%= key %> <%= i %>;
+    <% end -%>
+  <% else -%>
+    <%= key %> <%= val %>;
+  <% end -%>
+  <% end -%>
+  <% end -%>
   }
+  
 }<% end %>
