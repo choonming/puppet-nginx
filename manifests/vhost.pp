@@ -5,6 +5,7 @@ define nginx::vhost (
   $virtual_ip         = '*',
   $virtual_port       = '80',
   $access_log         = undef,
+  $error_log          = undef,
   $location           = undef,
   $ssl_location       = undef,
   $ssl_enabled        = false,

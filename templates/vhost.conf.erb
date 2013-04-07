@@ -1,10 +1,14 @@
 server {
   listen <%= virtual_ip %>:<%= virtual_port %><% if default_vhost == 'true' %> default<% end %>;
   server_name <%= server_name %>;
-  <% if @access_log %>
+  <% if @access_log -%>
   access_log <%= access_log %>;
-  <% else %>
-  access_log var/log/access.log;<% end %>
+  <% else -%>
+  access_log /var/log/nginx/access.log;<% end %>
+  <% if @error_log -%>
+  error_log <%= error_log %>
+  <% else -%>
+  error_log /var/log/nginx/error.log;<% end %>
 
   <% location.sort.each do |index, element| -%>
   location <%= index %> {
