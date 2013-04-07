@@ -9,6 +9,8 @@ server {
   error_log <%= error_log %>
   <% else -%>
   error_log /var/log/nginx/error.log;<% end %>
+  <% if @root -%>
+  root <%= root %>;<% end %>
 
   <% location.sort.each do |index, element| -%>
   location <%= index %> {
