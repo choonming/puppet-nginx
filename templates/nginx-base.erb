@@ -1,0 +1,15 @@
+<% nginx_global_options.each do | key, val | -%>
+<%= key %> <%= val %>;
+<% end -%>
+
+events {
+<% nginx_events_options.each do | key, val | -%>
+  <% key %> <%= val %>;
+<% end -%>
+}
+
+http {
+<% nginx_http_options.each do | key, val | -%>
+  <% key %> <%= val %>;
+<% end -%>
+}

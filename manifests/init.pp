@@ -1,4 +1,8 @@
-class nginx {
+class nginx (
+  $nginx_global_options = $nginx::params::nginx_global_options,
+  $nginx_events_options = $nginx::params::nginx_events_options,
+  $nginx_http_options   = $nginx::params::nginx_http_options,
+) {
   
   include nginx::service
   
@@ -7,11 +11,17 @@ class nginx {
   }
   
   file { '/etc/nginx/nginx.conf':
-    ensure  => present,
     mode    => 0644,
     owner   => 'root',
     group   => 'root',
-    source  => 'puppet:///nginx/nginx.conf',
+    require => Package['nginx'],
+    notify  => Class['nginx::service'],
+  }
+  
+  concat::fragment { 'nginx-base':
+    target  => '/etc/nginx/nginx.conf',
+    order   => '10',
+    content =>  template('nginx/nginx-base.erb'),
     notify  => Class['nginx::service'],
   }
 
