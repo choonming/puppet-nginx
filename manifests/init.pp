@@ -1,10 +1,30 @@
 class nginx (
-  $nginx_global_options = $nginx::params::nginx_global_options,
-  $nginx_events_options = $nginx::params::nginx_events_options,
-  $nginx_http_options   = $nginx::params::nginx_http_options,
+  $nginx_global_options = undef,
+  $nginx_events_options = undef,
+  $nginx_http_options   = undef,
 ) {
   
+  include nginx::params
   include nginx::service
+
+  if nginx_global_options != undef {
+    $nginx_global_options_real = $nginx_global_options
+  } else {
+    $nginx_global_options_real = $nginx::params::nginx_global_options
+  }
+
+  if nginx_events_options != undef {
+    $nginx_events_options_real = $nginx_events_options
+  } else {
+    $nginx_events_options_real = $nginx::params::nginx_events_options
+  }
+
+  if nginx_http_options != undef {
+    $nginx_http_options_real = $nginx_http_options
+  } else {
+    $nginx_http_options_real = $nginx::params::nginx_http_options
+  }
+
   
   package { 'nginx':
     ensure  => present,
