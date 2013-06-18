@@ -4,22 +4,23 @@ class nginx (
   $nginx_http_options   = undef,
 ) {
   
+  include concat::setup
   include nginx::params
   include nginx::service
 
-  if nginx_global_options != undef {
+  if $nginx_global_options != undef {
     $nginx_global_options_real = $nginx_global_options
   } else {
     $nginx_global_options_real = $nginx::params::nginx_global_options
   }
 
-  if nginx_events_options != undef {
+  if $nginx_events_options != undef {
     $nginx_events_options_real = $nginx_events_options
   } else {
     $nginx_events_options_real = $nginx::params::nginx_events_options
   }
 
-  if nginx_http_options != undef {
+  if $nginx_http_options != undef {
     $nginx_http_options_real = $nginx_http_options
   } else {
     $nginx_http_options_real = $nginx::params::nginx_http_options
@@ -30,7 +31,7 @@ class nginx (
     ensure  => present,
   }
   
-  file { '/etc/nginx/nginx.conf':
+  concat { '/etc/nginx/nginx.conf':
     mode    => 0644,
     owner   => 'root',
     group   => 'root',
