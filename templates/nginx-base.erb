@@ -1,15 +1,15 @@
-<% nginx_global_options_real.each do | key, val | -%>
+<% nginx_global_options_real.sort.each do | key, val | -%>
 <%= key %> <%= val %>;
 <% end -%>
 
 events {
-<% nginx_events_options_real.each do | key, val | -%>
+<% nginx_events_options_real.sort.each do | key, val | -%>
   <%= key %> <%= val %>;
 <% end -%>
 }
 
 http {
-<% nginx_http_options_real.each do | key, val | -%>
+<% nginx_http_options_real.sort.each do | key, val | -%>
   <%= key %> <%= val %>;
 <% end -%>
 }

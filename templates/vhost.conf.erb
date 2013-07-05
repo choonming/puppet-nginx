@@ -14,7 +14,7 @@ server {
 
   <% location.sort.each do |index, element| -%>
   location <%= index %> {
-  <% element.each do |key, val| -%>
+  <% element.sort.each do |key, val| -%>
   <% if val.is_a?(Array) -%>
     <% val.each do | i | -%>
     <%= key %> <%= i %>;
@@ -50,7 +50,7 @@ server {
 
   <% ssl_location.sort.each do |index, element| -%>
   location <%= index %> {
-  <% element.each do |key, val| -%>
+  <% element.sort.each do |key, val| -%>
   <% if val.is_a?(Array) -%>
     <% val.each do | i | -%>
     <%= key %> <%= i %>;
