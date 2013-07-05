@@ -12,4 +12,5 @@ http {
 <% nginx_http_options_real.sort.each do | key, val | -%>
   <%= key %> <%= val %>;
 <% end -%>
+  include /etc/nginx/conf.d/*.conf;
 }
