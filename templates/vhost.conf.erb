@@ -6,7 +6,7 @@ server {
   <% else -%>
   access_log /var/log/nginx/access.log;<% end %>
   <% if @error_log -%>
-  error_log <%= error_log %>
+  error_log <%= error_log %>;
   <% else -%>
   error_log /var/log/nginx/error.log;<% end %>
   <% if @root -%>
@@ -23,8 +23,8 @@ server {
     <%= key %> <%= val %>;
   <% end -%>
   <% end -%>
-  <% end -%>
   }
+  <% end -%>
 
 }
 
