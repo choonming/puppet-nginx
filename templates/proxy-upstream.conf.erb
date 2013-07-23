@@ -1,5 +1,5 @@
 upstream <%= name %> {
-  <% members.each do |i| -%>
+  <% members.sort.each do |i| -%>
   server <%= i %>;
   <% end %>
 }
