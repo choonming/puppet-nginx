@@ -1,16 +1,34 @@
 <% nginx_global_options_real.sort.each do | key, val | -%>
+<% if val.is_a?(Array) -%>
+<% val.sort.each do | i | -%>
+<%= key %> <%= i %>;
+<% end -%>
+<% else -%>
 <%= key %> <%= val %>;
+<% end -%>
 <% end -%>
 
 events {
 <% nginx_events_options_real.sort.each do | key, val | -%>
+<% if val.is_a?(Array) -%>
+<% val.sort.each do | i | -%>
+  <%= key %> <%= i %>;
+<% end -%>
+<% else -%>
   <%= key %> <%= val %>;
+<% end -%>
 <% end -%>
 }
 
 http {
 <% nginx_http_options_real.sort.each do | key, val | -%>
+<% if val.is_a?(Array) -%>
+<% val.sort.each do | i | -%>
+  <%= key %> <%= i %>;
+<% end -%>
+<% else -%>
   <%= key %> <%= val %>;
+<% end -%>
 <% end -%>
   include /etc/nginx/conf.d/*.conf;
 }
