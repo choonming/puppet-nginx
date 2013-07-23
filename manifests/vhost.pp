@@ -18,7 +18,8 @@ define nginx::vhost (
   $ssl_session        = '5m',
   $ssl_depth          = '1',
   $ssl_protocols      = 'SSLv3 TLSv1',
-  $ssl_ciphers        = 'ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv3:+EXP'
+  $ssl_ciphers        = 'ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv3:+EXP',
+  $try_files          = undef
 ) {
 
   File {
