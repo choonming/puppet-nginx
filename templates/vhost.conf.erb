@@ -13,6 +13,10 @@ server {
   root <%= root %>;<% end %>
   <% if @try_files -%>
   try_files <%= try_files%>;<% end %>
+  <% if @other_options -%>
+  <% other_options.sort.each do |option, value| -%>
+  <%= option %> <%= value %>;<% end -%>
+  <% end -%>
 
   <% location.sort.each do |index, element| -%>
   location <%= index %> {
